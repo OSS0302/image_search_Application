@@ -37,6 +37,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: GridView.builder(
+                padding: EdgeInsets.all(16.0),
                 itemCount: 10, // 아이템 갯수
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, //crossAxisCount 열
