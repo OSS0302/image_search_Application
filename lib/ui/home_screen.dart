@@ -15,19 +15,20 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white, // 배경 색을 흰색으로
         elevation: 0, // elevation그림자를 0 으로한다
       ),
-      body:  Padding(  //const  컴파일 타임에 만들어지고 계속계속해서 재사용 되서 메모리를 줄여주는 효과 가 있다.
-        padding: EdgeInsets.all(8.0),
+      body: Padding(
+        //const  컴파일 타임에 만들어지고 계속계속해서 재사용 되서 메모리를 줄여주는 효과 가 있다.
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                       Radius.circular(10.0)), // 검색창 모서리 각도 10 둥글게 한다.
                 ),
-                suffixIcon: IconButton(onPressed: () {
-                  // 아이콘
-                }, icon: Icon(Icons.search)
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search),
                 ),
               ),
             )
