@@ -35,16 +35,20 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            GridView.builder(
-              itemCount: 10, // 아이템 갯수
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, //crossAxisCount 열
-                    crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
-                    mainAxisSpacing: 16 //  검색앱 가로세로 세팅
-                    ),
-                itemBuilder: (context, index) {
-                  return Container(); //위젯을 리턴하면된다.
-                },
+            Expanded(
+              child: GridView.builder(
+                itemCount: 10, // 아이템 갯수
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, //crossAxisCount 열
+                      crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
+                      mainAxisSpacing: 16 //  검색앱 가로세로 세팅
+                      ),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: Text('$index'),
+                    ); //위젯을 리턴하면된다.
+                  },
+              ),
             )
           ],
         ),
