@@ -20,21 +20,30 @@ class HomeScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(10.0)), // 검색창 모서리 각도 10 둥글게 한다.
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10.0)), // 검색창 모서리 각도 10 둥글게 한다.
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.search),
+                  ),
                 ),
               ),
-            )
+            ),
+            GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, //crossAxisCount 열childAspectRatio:15, crossAxisSpacing:
+              crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
+              mainAxisSpacing: 16 //  검색앱 가로세로 세팅
+            ) , itemBuilder: )
           ],
         ),
       ),
+
     );
   }
 }
