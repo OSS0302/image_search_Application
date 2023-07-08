@@ -14,8 +14,7 @@ class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Sta
 class _HomeScreenState extends State<HomeScreen> {
   final _controller =TextEditingController(); //검색 했을떄 가져올 데이털 컨트롨러 (작성한값을 얻으려고한다) 로직 생성
 
-  //이런 값을 사용하기 때문에 위에 const 를 사용하면 안된다.
-  final List<Photo> _photos = []; // 빈 리스트 초기화  아래 데이터 를 photos 빈 리스트에 채워진다.
+   List<Photo> _photos = []; // 빈 리스트 초기화  아래 데이터 를 photos 빈 리스트에 채워진다.
   Future<List<Photo>> fetch(String query) async {
     // 스트링 커리 지정 async  비동기
     final response = await http.get(Uri.parse(
@@ -62,8 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async { // fecth 로직이 Future이기 떄문에 async 사용한다.
-                     final photos =fetch( _controller.text); // 컨트롤러 텍스트를 가져와서 위에 fecth 로직을 수행해라
-
+                     final photos = await fetch( _controller.text); // 컨트롤러 텍스트를 가져와서 위에 fecth 로직을 수행해라
+                     setState(() {
+                       _photos = photos; // 새로운 작성된 값이 들어가면서 화면이(_photo) 다시 그려진다.
+                     });
                     },
                     icon: const Icon(Icons.search),
                   ),
@@ -73,15 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(16.0),
-                itemCount: 10, // 아이템 갯수
+                itemCount: _photos.length , // 아이템 갯수 photo.length()
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, //crossAxisCount 열
                     crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
                     mainAxisSpacing: 16 //  검색앱 가로세로 세팅
                     ),
                 itemBuilder: (context, index) {
-                  return const PhotoWidget(
-                    photo: Photo(),
+                  final photo = _photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
+                  return PhotoWidget(
+                    photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
                   ); //Photowidget 으로 변경 해주고 호출
                 },
               ),
