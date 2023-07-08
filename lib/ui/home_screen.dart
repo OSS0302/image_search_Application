@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_search/widget/photo_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         //const  컴파일 타임에 만들어지고 계속계속해서 재사용 되서 메모리를 줄여주는 효과 가 있다.
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Padding(
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 itemCount: 10, // 아이템 갯수
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, //crossAxisCount 열
@@ -45,15 +46,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 16 //  검색앱 가로세로 세팅
                       ),
                   itemBuilder: (context, index) {
-                    return Container(
-                     decoration: const BoxDecoration(
-                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                       image: DecorationImage(
-                         fit: BoxFit.cover,
-                         image: NetworkImage('https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_org.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90')
-                       )
-                     ),
-                    ); //위젯을 리턴하면된다.
+                    return const PhotoWidget(); //Photowidget 으로 변경 해주고 호출
                   },
               ),
             )
