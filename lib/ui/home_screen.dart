@@ -4,6 +4,8 @@ import 'package:image_search/model/Photo.dart';
 import 'package:image_search/widget/photo_widget.dart';
 import 'package:http/http.dart' as http;
 
+import '../data/api.dart';
+
 class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Stateless을
   const HomeScreen({Key? key}) : super(key: key);
 

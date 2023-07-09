@@ -1,3 +1,6 @@
+import 'dart:convert';
+import '../model/Photo.dart';
+import 'package:http/http.dart'as http ;
 // 스트링 커리 지정 async  비동기
 Future<List<Photo>> fetch(String query) async {
   final response = await http.get(Uri.parse(
