@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_search/data/api.dart';
 
+import '../model/Photo.dart';
+
 class PhotoProvider extends InheritedWidget {
   final PixabayApi api; //  api 추가하고
+  List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
 
-  const PhotoProvider( {
+  //stream controller 생성
+
+   PhotoProvider( { // 변수 가 들어와서 const를 제거한다.
     Key? key,
     required Widget child,
     required this.api,  // 생성자 추가
