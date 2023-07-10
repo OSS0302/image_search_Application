@@ -10,7 +10,7 @@ class PhotoProvider extends InheritedWidget {
   // List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
 
   //stream controller 생성
-  final _photoStreamController =StreamController<List<Photo>>(); //내부적으로 스트림을 관리하는 _photoStreamController 사용한다.
+  final _photoStreamController =StreamController<List<Photo>>()..add([]); //내부적으로 스트림을 관리하는 _photoStreamController 사용한다.
   Stream<List<Photo>> get photoStream =>_photoStreamController.stream;
 
    PhotoProvider( { // 변수 가 들어와서 const를 제거한다.
