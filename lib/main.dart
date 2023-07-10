@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/ui/home_screen.dart';
 
 import 'data/api.dart';
@@ -16,12 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  HomeScreen(api:PixabayApi()), // 오류가 나는 이유는 더이상 const가 아니기때문이다.
+      home: PhotoProvider(
+          api: PixabayApi(), child: const HomeScreen()
+      ),
     );
   }
 }
-
