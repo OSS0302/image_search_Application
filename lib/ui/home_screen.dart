@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import '../data/api.dart';
 
 class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Stateless을
-  const HomeScreen({Key? key}) : super(key: key);
+  final PixabayApi api; // PixabayApi를 사용하기 위해서 선언
+  const HomeScreen({Key? key, required this.api}) : super(key: key); // final 로 선언해서 required  필요하다.
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Sta
 
 class _HomeScreenState extends State<HomeScreen> {
   final api = PixabayApi();
+
   final _controller =TextEditingController(); //검색 했을떄 가져올 데이털 컨트롨러 (작성한값을 얻으려고한다) 로직 생성
 
    List<Photo> _photos = []; // 빈 리스트 초기화  아래 데이터 를 photos 빈 리스트에 채워진다.
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async { // fecth 로직이 Future이기 떄문에 async 사용한다.
-                     final photos = await api.fetch( _controller.text); // 컨트롤러 텍스트를 가져와서 위에 fecth 로직을 수행해라
+                     final photos = await widget.api.fetch( _controller.text); // 컨트롤러 텍스트를 가져와서 위에 fecth 로직을 수행해라
                      setState(() {
                        _photos = photos; // 새로운 작성된 값이 들어가면서 화면이(_photo) 다시 그려진다.
                      });
