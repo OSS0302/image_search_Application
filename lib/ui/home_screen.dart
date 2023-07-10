@@ -66,22 +66,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                itemCount: _photos.length , // 아이템 갯수 photo.length()
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, //crossAxisCount 열
-                    crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
-                    mainAxisSpacing: 16 //  검색앱 가로세로 세팅
-                    ),
-                itemBuilder: (context, index) {
-                  final photo = _photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
-                  return PhotoWidget(
-                    photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
-                  ); //Photowidget 으로 변경 해주고 호출
-                },
-              ),
+            
+            StreamBuilder<List<Photo>>(
+              stream: photoprovider.photoStream,
+              builder: (context, snapshot) {
+                if(!snapshot.hasData){
+                  return const CircularProgressIndicator(); // 데이터가 없다면 로딩 CircularProgressIndicator보여주고
+                }
+              final photos = snapshot.data!;
+
+                return Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: photos.length , //
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, //crossAxisCount 열
+                        crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
+                        mainAxisSpacing: 16 //  검색앱 가로세로 세팅
+                        ),
+                    itemBuilder: (context, index) {
+                      final photo = photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
+                      return PhotoWidget(
+                        photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
+                      ); //Photowidget 으로 변경 해주고 호출
+                    },
+                  ),
+                );
+              }
             )
           ],
         ),
