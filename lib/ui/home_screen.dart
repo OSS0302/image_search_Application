@@ -80,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final photo = _photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
                   return PhotoWidget(
                     photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
+                    api: widget.api,
                   ); //Photowidget 으로 변경 해주고 호출
                 },
               ),
