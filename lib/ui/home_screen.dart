@@ -58,11 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async { // fecth 로직이 Future이기 떄문에 async 사용한다.
-                     final photos = await photoprovider.api.fetch( _controller.text); // 컨트롤러 텍스트를 가져와서 위에 fecth 로직을 수행해라
-                     setState(() {
-                       _photos = photos; // 새로운 작성된 값이 들어가면서 화면이(_photo) 다시 그려진다.
-                     });
-                    },
+                      photoprovider.fetch(_controller.text); // 실행하면 photo_privder fetch에 데이터를 넣어준다.
+
+                     },
                     icon: const Icon(Icons.search),
                   ),
                 ),
