@@ -1,20 +1,14 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:image_search/data/api.dart';
-
-import '../model/Photo.dart';
-
+import 'package:image_search/ui/home_view_model.dart';
 class PhotoProvider extends InheritedWidget {
-  final PixabayApi api; //  api 추가하고
   // List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
+  final HomeViewModel viewModel;
 
-
-
-   PhotoProvider( { // 변수 가 들어와서 const를 제거한다.
+    PhotoProvider( { // 변수 가 들어와서 const를 제거한다.
     Key? key,
     required Widget child,
-    required this.api,  // 생성자 추가
+    required this.viewModel, // viewModel 추가하기
   }) : super(key: key, child: child);
 
   //다른 곳에 제공 할수 있도록 하는 함수
@@ -30,7 +24,7 @@ class PhotoProvider extends InheritedWidget {
   @override
   bool updateShouldNotify( PhotoProvider oldWidget) { // 변경되었다는 규칙을 정하는 로직 이고 데이터 이전 상태와 변경후 상태 비교 하는로직
     //covariant는 이름 변경해도 됩니다.  이미 super class 에서 정의가 되어있다.  그래서 타입을 바꿔도 됩니다.
-    return oldWidget.api != api; //oldWidget.api 이전상태의 api 하고 현시점의 api 하고 다르면 변경될 것으로 보자
+    return true;
   }
 }
 
