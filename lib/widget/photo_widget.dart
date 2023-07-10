@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_search/model/Photo.dart';
 
+import '../data/api.dart';
+
 class PhotoWidget extends StatelessWidget {
   final Photo photo; // 포토 필드 전역변수 선언 포토기반 으로 동작 하기위해서
+  final PixabayApi api; //
 
-  const PhotoWidget({Key? key, required this.photo})
+  const PhotoWidget({Key? key,
+    required this.photo,
+    required this.api})
       : super(key: key); // this.photo 추가
   @override
   Widget build(BuildContext context) {
