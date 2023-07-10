@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:image_search/data/api.dart';
 
@@ -8,6 +10,8 @@ class PhotoProvider extends InheritedWidget {
   List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
 
   //stream controller 생성
+  final _photoStreamController =StreamController<List<Photo>>(); //내부적으로 스트림을 관리하는 _photoStreamController 사용한다.
+  Stream<List<Photo>> get photoStream =>_photoStreamController.stream;
 
    PhotoProvider( { // 변수 가 들어와서 const를 제거한다.
     Key? key,
@@ -23,6 +27,9 @@ class PhotoProvider extends InheritedWidget {
     assert(result != null, 'No PixabayApi found in context');
     return result!;
   }
+  // _photoStreamController 에 데이터를 채울 메서드를 생성
+
+
   //InheritedWidget: 어떤 위젯 트리에도 원하는 데이터를 꽂아서 사용할 수있는 그런 방법 해주는 특별 한 위젯
   @override
   bool updateShouldNotify( PhotoProvider oldWidget) { // 변경되었다는 규칙을 정하는 로직 이고 데이터 이전 상태와 변경후 상태 비교 하는로직
