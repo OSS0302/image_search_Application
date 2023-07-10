@@ -7,7 +7,7 @@ import '../model/Photo.dart';
 
 class PhotoProvider extends InheritedWidget {
   final PixabayApi api; //  api 추가하고
-  List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
+  // List<Photo> _photos = []; //InheritedWidget 안에는 불변객체를 가지는 특성를 가진다.  그래서 경고 가나온다.
 
   //stream controller 생성
   final _photoStreamController =StreamController<List<Photo>>(); //내부적으로 스트림을 관리하는 _photoStreamController 사용한다.
@@ -28,6 +28,11 @@ class PhotoProvider extends InheritedWidget {
     return result!;
   }
   // _photoStreamController 에 데이터를 채울 메서드를 생성
+  Future<void> fetch(String query ) async {
+    final result = await api.fetch(query);
+    _photoStreamController.add(result);
+
+  }
 
 
   //InheritedWidget: 어떤 위젯 트리에도 원하는 데이터를 꽂아서 사용할 수있는 그런 방법 해주는 특별 한 위젯
