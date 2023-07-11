@@ -14,8 +14,10 @@ class PixabayApi implements PhotoApiRepository {
 
 
   @override
-  Future<List<Photo>> fetch(String query) async {
-    final response = await http.get(Uri.parse(
+  Future<List<Photo>> fetch(String query,{http.Client? client}) async {
+    client ??= http.Client(); // 클라이언트 널일때 http.Client()로 초기화를 하겠다.
+
+    final response = await client.get(Uri.parse(
         '$baseUrl?key=$key=$query&image_type=photo&pretty=true'));
     //Response body를 제이슨 디코드변환 사용해야한다.
     Map<String, dynamic> jsonResponse = jsonDecode(response.body); //맵형태로 얻는 데이터는 제이슨 형태로 데이터를 얻을수있다
