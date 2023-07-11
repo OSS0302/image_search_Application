@@ -18,6 +18,7 @@ void main(){
       emitsInOrder([
         equals([]),
         equals(result), // 포토 스트림을 통해서 fakeJson.map((e) => Photo.fromJson(e)).toList() 가 들어올지 예상한다.
+        equals(result), // 포토 스트림을 통해서 fakeJson.map((e) => Photo.fromJson(e)).toList() 가 들어올지 예상한다.
 
       ]),
     );

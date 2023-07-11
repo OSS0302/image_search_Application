@@ -1,14 +1,19 @@
 import 'dart:convert';
+import 'package:image_search/data/photo_api_repository.dart';
+
 import '../model/Photo.dart';
 import 'package:http/http.dart' as http;
 
-class PixabayApi {
+class PixabayApi implements PhotoApiRepository {
 // 스트링 커리 지정 async  비동기
   // pixabay 페이지 Url
   final baseUrl = 'https://pixabay.com/api/'; // Url 중에 변하는건 key 이기때문에  변하지 않는 url 'https://pixabay.com/api/'를 분리했다.
   // static const baseUrl = 'https://pixabay.com/api/'; // 변하지 않는값이라서  final이  static const 사용할 수도있다.
   //pixabay key
   final key = '38081108-118a6127b8642576a388e6c5e&q';
+
+
+  @override
   Future<List<Photo>> fetch(String query) async {
     final response = await http.get(Uri.parse(
         '$baseUrl?key=$key=$query&image_type=photo&pretty=true'));
