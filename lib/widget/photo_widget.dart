@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_search/model/Photo.dart';
 
-import '../data/api.dart';
+import '../data/pixabay_api.dart';
 
 class PhotoWidget extends StatelessWidget {
   final Photo photo; // 포토 필드 전역변수 선언 포토기반 으로 동작 하기위해서

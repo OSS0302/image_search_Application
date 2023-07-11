@@ -5,7 +5,7 @@ import 'package:image_search/model/Photo.dart';
 import 'package:image_search/widget/photo_widget.dart';
 import 'package:http/http.dart' as http;
 
-import '../data/api.dart';
+import '../data/pixabay_api.dart';
 
 class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Stateless을
   const HomeScreen({Key? key}) : super(key: key); // final 로 선언해서 required  필요하다.
@@ -19,9 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _controller =TextEditingController(); //검색 했을떄 가져올 데이털 컨트롨러 (작성한값을 얻으려고한다) 로직 생성
 
-
-
-
   // 사용후 헤제
   @override
   void dispose() {
@@ -31,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoprovider = PhotoProvider.of(context); // 선언하면 photoProvider 로직을 사용할 수있다.
+    final viewModel = PhotoProvider.of(context).viewModel; // viewModel 로 변경
     return Scaffold(
       appBar: AppBar(
         centerTitle: true, // 제목을 가운데로 오게한다.
@@ -58,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async { // fecth 로직이 Future이기 떄문에 async 사용한다.
-                      photoprovider.fetch(_controller.text); // 실행하면 photo_privder fetch에 데이터를 넣어준다.
+                      viewModel.fetch(_controller.text); // 실행하면 photo_privder fetch에 데이터를 넣어준다.
 
                      },
                     icon: const Icon(Icons.search),
@@ -68,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             
             StreamBuilder<List<Photo>>(
-              stream: photoprovider.photoStream,
+              stream: viewModel.photoStream,
               builder: (context, snapshot) {
                 if(!snapshot.hasData){
                   return const CircularProgressIndicator(); // 데이터가 없다면 로딩 CircularProgressIndicator보여주고

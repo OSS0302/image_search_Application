@@ -97,4 +97,18 @@ class Photo {
     _data['userImageURL'] = userImageURL;
     return _data;
   }
+
+//아이디 같으면 같은 객체로 보겠다.
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Photo && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'Photo{id: $id}';
+  }
 }
