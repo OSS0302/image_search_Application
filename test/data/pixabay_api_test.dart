@@ -1,9 +1,9 @@
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search/data/pixabay_api.dart';
 import 'package:http/http.dart'as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
 import 'pixabay_api_test.mocks.dart';
 @GenerateMocks([http.Client])
 void main(){
@@ -14,11 +14,12 @@ void main(){
       '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo')))// 모키토에서 제공하는 기능
   .thenAnswer((_)  async => http.Response(fakeJsonBody,200 ));
 
-
-
   final result = await api.fetch('iphone');
 
   expect(result.length,20); // 20개인지 확인하는 테스트
+  // 검증하기
+    verify(client.get(Uri.parse(
+        '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo')));
   });
 }
 String fakeJsonBody ="""
