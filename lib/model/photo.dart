@@ -10,7 +10,7 @@ class Photo extends Equatable{ // Equatable 상속 받으면 불변 객체로 �
   final String previewUrl; // 프리뷰
 
 // 플러터 형식으로 변환하기
-  Photo({
+   Photo({
     required this.id,
     required this.tags,
     required this.previewUrl
@@ -21,7 +21,7 @@ class Photo extends Equatable{ // Equatable 상속 받으면 불변 객체로 �
 
   Map<String, dynamic> toJson() => _$PhotoToJson(this);
 
-
+// == hashcode 와 toString 를 한 로직 과 같다
   @override
   List<Object?> get props => [id];
 }
