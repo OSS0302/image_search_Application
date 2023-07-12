@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/ui/home_screen.dart';
 import 'package:image_search/ui/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'data/pixabay_api.dart';
 
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: PhotoProvider(
-          viewModel: HomeViewModel(PixabayApi()),
+      home: Provider (
+          create: (_)=> HomeViewModel(PixabayApi()),
           child: const HomeScreen()
       ),
     );
