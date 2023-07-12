@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_search/data/photo_provider.dart';
-import 'package:image_search/ui/home_screen.dart';
-import 'package:image_search/ui/home_view_model.dart';
+import 'package:image_search/presentation/home/home_screen.dart';
+import 'package:image_search/presentation/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'data/pixabay_api.dart';
+import 'data/repository/photo_api_repository_impl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: ChangeNotifierProvider ( // 감지할 수있는 프로바이더로
-          create: (_)=> HomeViewModel(PixabayApi()),
+          create: (_)=> HomeViewModel(PhotoApiRepositoryImpl()),
           child: const HomeScreen()
       ),
     );
