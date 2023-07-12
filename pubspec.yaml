@@ -40,6 +40,8 @@ dependencies:
   equatable: ^2.0.5
 
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,6 +55,7 @@ dev_dependencies:
   mockito: ^5.4.2
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
+  freezed: ^2.4.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
