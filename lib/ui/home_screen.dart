@@ -1,10 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image_search/data/photo_provider.dart';
-import 'package:image_search/model/photo.dart';
 import 'package:image_search/ui/home_view_model.dart';
 import 'package:image_search/widget/photo_widget.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../data/pixabay_api.dart';
@@ -32,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     //final viewModel = Provider.of<HomeViewModel>(context); // provider 로 변경
     // 이렇게 쓸수있다.
-    final viewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async { // fecth 로직이 Future이기 떄문에 async 사용한다.
-                      viewModel.fetch(_controller.text); // 실행하면 photo_privder fetch에 데이터를 넣어준다.
-
+                      // read 를 사용하면 한번 사용된다.
+                      context.read<HomeViewModel>().fetch(_controller.text); // 실행하면 photo_privder fetch에 데이터를 넣어준다.
                      },
                     icon: const Icon(Icons.search),
                   ),
@@ -69,22 +64,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                itemCount: viewModel.photos.length , //
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, //crossAxisCount 열
-                    crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
-                    mainAxisSpacing: 16 //  검색앱 가로세로 세팅
-                ),
-                itemBuilder: (context, index) {
-                  final photo = viewModel.photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
-                  return PhotoWidget(
-                    photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
-                  ); //Photowidget 으로 변경 해주고 호출
-                },
-              ),
+            Consumer<HomeViewModel>(
+              builder:(_, viewModel, child){
+                return Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: viewModel.photos.length , //
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, //crossAxisCount 열
+                        crossAxisSpacing: 16.0, // 검색 앱 가로세로 세팅
+                        mainAxisSpacing: 16 //  검색앱 가로세로 세팅
+                    ),
+                    itemBuilder: (context, index) {
+                      final photo = viewModel.photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
+                      return PhotoWidget(
+                        photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
+                      ); //Photowidget 으로 변경 해주고 호출
+                    },
+                  ),
+                );
+              }
             ),
           ],
         ),
