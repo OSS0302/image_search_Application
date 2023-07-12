@@ -7,12 +7,12 @@ part 'photo.freezed.dart';
 part 'photo.g.dart';
 
 @freezed
-class photo with _$photo {
-  factory photo({
+class Photo with _$Photo {
+  factory Photo({
    required int id,
    required String tags,
    required String previewURL,
-  }) = _photo;
+  }) = _Photo;
 
-  factory photo.fromJson(Map<String, dynamic> json) => _$photoFromJson(json);
+  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
 }
