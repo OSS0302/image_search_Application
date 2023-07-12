@@ -1,5 +1,4 @@
 import 'package:image_search/data/photo_api_repository.dart';
-import 'package:image_search/data/pixabay_api.dart';
 import 'package:image_search/model/photo.dart';
 import 'package:image_search/ui/home_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,19 +8,10 @@ void main(){
     //PixabayApi fetch기능  가 잘 못되면 HomeViewModel 도 사용할 수없다  의존성
 
     await viewModel.fetch('apple');
-    await viewModel.fetch('iphone');
 
     final  List<Photo> result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
-    expect(
-    viewModel.photoStream,
-      emitsInOrder([
-        equals([]),
-        equals(result), // 포토 스트림을 통해서 fakeJson.map((e) => Photo.fromJson(e)).toList() 가 들어올지 예상한다.
-        equals(result), // 포토 스트림을 통해서 fakeJson.map((e) => Photo.fromJson(e)).toList() 가 들어올지 예상한다.
-
-      ]),
-    );
+    expect(viewModel.photos, result); // 결과 값을 한번만 비교하겠다.
   });
 }
 
