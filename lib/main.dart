@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Provider (
+      home: ChangeNotifierProvider ( // 감지할 수있는 프로바이더로
           create: (_)=> HomeViewModel(PixabayApi()),
           child: const HomeScreen()
       ),
