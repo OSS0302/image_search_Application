@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_search/data/data_source/Pixabay_api.dart';
 import 'package:image_search/data/repository/photo_api_repository_impl.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
@@ -8,18 +9,18 @@ import 'pixabay_api_test.mocks.dart';
 @GenerateMocks([http.Client])
 void main() {
   test('Pixabay 테이터를 잘 가져와야한다.', () async {
-    final api = PhotoApiRepositoryImpl();
     final client = MockClient(); // client.get 이 어떯게 로직 작동하는지 테스트
+    final api = PhotoApiRepositoryImpl(PixabayApi(client));
     when(client.get(Uri.parse(
-        '${PhotoApiRepositoryImpl.baseUrl}?key=${PhotoApiRepositoryImpl.key}=iphone&image_type=photo&pretty=true'))) // 모키토에서 제공하는 기능
+        '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo&pretty=true'))) // 모키토에서 제공하는 기능
         .thenAnswer((_) async => http.Response(fakeJsonBody, 200));
 
-    final result = await api.fetch('iphone',client: client);
+    final result = await api.fetch('iphone');
 
     expect(result.length, 20); // 처음 아이디 확인
     // 검증하기
     verify(client.get(Uri.parse(
-        '${PhotoApiRepositoryImpl.baseUrl}?key=${PhotoApiRepositoryImpl.key}=iphone&image_type=photo&pretty=true')));
+        '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo&pretty=true')));
   });
 }
 
