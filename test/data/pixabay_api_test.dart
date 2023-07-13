@@ -19,7 +19,7 @@ void main() {
 
     final Result<List<Photo>>  result = await api.fetch('iphone'); // 타입이 Result 변경되어서 오류가난다.
 
-    expect((result as Success<List<Photo>>).data.first,  2681039); // 캐스팅을 해야 -> photo List 로 강제 변경된다. // 처음 아이디 확인
+    expect((result as Success<List<Photo>>).data.first.id,  2681039); // 캐스팅을 해야 -> photo List 로 강제 변경된다. // 처음 아이디 확인
     // 검증하기
     verify(client.get(Uri.parse(
         '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo&pretty=true')));
