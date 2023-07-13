@@ -1,3 +1,4 @@
+import 'package:image_search/data/data_source/result.dart';
 import 'package:image_search/domain/repository/photo_api_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search/domain/model/photo.dart';
@@ -18,10 +19,10 @@ void main(){
 //가짜 데이터 만들기
 class FakePhotoApiRepository extends PhotoApiRepository{
   @override
-  Future<List<Photo>> fetch(String query) async {
+  Future<Result<List<Photo>>> fetch(String query) async {
     Future.delayed(const Duration(milliseconds: 500)); //0.5초 대기
 
-      return fakeJson.map((e) => Photo.fromJson(e)).toList(); //
+      return Result.success(fakeJson.map((e) => Photo.fromJson(e)).toList()); // 가짜 데이터를 성공시
   }
 }
 List<Map<String,dynamic>> fakeJson =[ //map 이니까 두개의 데이터를 넣었다.
