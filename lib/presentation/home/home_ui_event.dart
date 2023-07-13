@@ -4,6 +4,6 @@ part 'home_ui_event.freezed.dart';
 
 @freezed
 abstract class HomeUiEvent<T> with _$HomeUiEvent<T> {
-  const factory HomeUiEvent.showSnackBar(String message ) = ShowSnackBar;
+  const factory HomeUiEvent.showSnackBar(String message) = ShowSnackBar;
 
-  se
+}
