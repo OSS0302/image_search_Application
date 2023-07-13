@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search/data/data_source/Pixabay_api.dart';
+import 'package:image_search/data/data_source/result.dart';
 import 'package:image_search/data/repository/photo_api_repository_impl.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_search/domain/model/photo.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'pixabay_api_test.mocks.dart';
@@ -15,9 +17,9 @@ void main() {
         '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo&pretty=true'))) // 모키토에서 제공하는 기능
         .thenAnswer((_) async => http.Response(fakeJsonBody, 200));
 
-    final result = await api.fetch('iphone');
+    final Result<List<Photo>>  result = await api.fetch('iphone'); // 타입이 Result 변경되어서 오류가난다.
 
-    expect(result.length, 20); // 처음 아이디 확인
+    expect((result as Success<List<Photo>>).data.first,  2681039); // 캐스팅을 해야 -> photo List 로 강제 변경된다. // 처음 아이디 확인
     // 검증하기
     verify(client.get(Uri.parse(
         '${PixabayApi.baseUrl}?key=${PixabayApi.key}=iphone&image_type=photo&pretty=true')));
