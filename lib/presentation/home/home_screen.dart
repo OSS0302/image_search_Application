@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_search/data/photo_provider.dart';
@@ -18,19 +19,36 @@ class HomeScreen extends StatefulWidget { // setState울 사용해야되서  Sta
 class _HomeScreenState extends State<HomeScreen> {
 
   final _controller =TextEditingController(); //검색 했을떄 가져올 데이털 컨트롨러 (작성한값을 얻으려고한다) 로직 생성
+  StreamSubscription? _streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      final viewModel = context.read<HomeViewModel>();// initState안에 뷰모델 사용해야되서 추가
+      _streamSubscription =viewModel.EventStream.listen((event) {
+        event.when(showSnackBar: (message){
+          final snackBar = SnackBar(content:Text(message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      });
+    });
+  }
 
   // 사용후 헤제
   @override
   void dispose() {
+    _streamSubscription?.cancel(); //streamSubscription 있으면 취소
     _controller.dispose(); // _controller.dispose 호출
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    //final viewModel = Provider.of<HomeViewModel>(context); // provider 로 변경
+    final viewModel = Provider.of<HomeViewModel>(context); // provider 로 변경
     // 이렇게 쓸수있다.
-    final viewModel = context.watch<HomeViewModel>();
+    //final viewModel = context.watch<HomeViewModel>();// initState안에 뷰모델 사용해야되서 추가
 
     return Scaffold(
       appBar: AppBar(
