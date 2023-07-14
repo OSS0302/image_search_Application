@@ -2,17 +2,18 @@ import 'package:image_search/data/data_source/result.dart';
 import 'package:image_search/domain/repository/photo_api_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search/domain/model/photo.dart';
+import 'package:image_search/domain/use_case/get_photos_use_case.dart';
 import 'package:image_search/presentation/home/home_view_model.dart';
 void main(){
   test('Stream이 잘 동작해야한다',()async{
-    final viewModel = HomeViewModel(FakePhotoApiRepository()); // 객체 생성
+    final viewModel = HomeViewModel(GetPhotosUseCase(FakePhotoApiRepository())); // 객체 생성
     //PixabayApi fetch기능  가 잘 못되면 HomeViewModel 도 사용할 수없다  의존성
 
     await viewModel.fetch('apple');
 
     final  List<Photo> result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
-    expect(viewModel.photos, result); // 결과 값을 한번만 비교하겠다.
+    expect(viewModel.state.photos, result); // 결과 값을 한번만 비교하겠다.
   });
 }
 
