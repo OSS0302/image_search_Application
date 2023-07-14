@@ -30,14 +30,17 @@ class HomeViewModel with ChangeNotifier {
   // _photoStreamController 에 데이터를 채울 메서드를 생성
   Future<void> fetch(String query) async {
     _isLoading = true;
+    notifyListeners() // 상태 감지
     final Result<List<Photo>> result = await repository.fetch(query);
     // 검사하기
     result.when(success: (photos) {
         _photos = photos; // 갱신한다.
+      notifyListeners(); // 상태감지
     }, error: (message) {
         _eventController.add(HomeUiEvent.showSnackBar(message));
       }
     );
     _isLoading=false;
+    notifyListeners(); // 상태감지
   }
 }
