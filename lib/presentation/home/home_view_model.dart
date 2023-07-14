@@ -4,20 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_search/data/data_source/result.dart';
 import 'package:image_search/domain/repository/photo_api_repository.dart';
 import 'package:image_search/domain/model/photo.dart';
+import 'package:image_search/presentation/home/home_state.dart';
 import 'package:image_search/presentation/home/home_ui_event.dart';
 
 class HomeViewModel with ChangeNotifier {
   final PhotoApiRepository repository;
+  
+  HomeState _state = HomeState([], false);
 
-  List<Photo> _photos = []; //빈 리스트 생성
+  HomeState get state => _state; // 생성자 추가
 
-  // getter 생성 :내부에서 홈 뷰모델을 고치고 외부에서 _photos를 고치지 못하도록 get 를 사용한다.
-  UnmodifiableListView<Photo> get photos => UnmodifiableListView(_photos); //수정 못하는리스트: UnmodifiableListView
-
-  bool _isLoading = false;
-
-
-  bool get isLoading => _isLoading; //getter 를 사용하면 외부에서 사용할수없다 .
 
   // 사용자 한테 에러메시지 를 보여주기위해서 컨트롤러 생성
   final _eventController = StreamController<HomeUiEvent>();
@@ -29,18 +25,19 @@ class HomeViewModel with ChangeNotifier {
 
   // _photoStreamController 에 데이터를 채울 메서드를 생성
   Future<void> fetch(String query) async {
-    _isLoading = true;
-    notifyListeners() // 상태 감지
+    _state = state.copy(isLoading: true); // 기존 state 에서 카피한 로딩이 true 로 한다.
+    state.isLoading = true;
+    notifyListeners(); // 상태 감지
     final Result<List<Photo>> result = await repository.fetch(query);
     // 검사하기
     result.when(success: (photos) {
-        _photos = photos; // 갱신한다.
+      _state = state.copy(photos: photos); // 갱신한다.
       notifyListeners(); // 상태감지
     }, error: (message) {
         _eventController.add(HomeUiEvent.showSnackBar(message));
       }
     );
-    _isLoading=false;
+    _state = state.copy(isLoading: false);
     notifyListeners(); // 상태감지
   }
 }
