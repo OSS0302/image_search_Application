@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context); // provider 로 변경
+    final state = viewModel.state; // state 선언
     // 이렇게 쓸수있다.
     //final viewModel = context.watch<HomeViewModel>();// initState안에 뷰모델 사용해야되서 추가
 
@@ -88,12 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            viewModel.isLoading
+            state.isLoading
                 ? CircularProgressIndicator()
                 : Expanded(
                     child: GridView.builder(
                       padding: const EdgeInsets.all(16.0),
-                      itemCount: viewModel.photos.length, //
+                      itemCount: viewModel.state.photos.length, //
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, //crossAxisCount 열
@@ -101,8 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisSpacing: 16 //  검색앱 가로세로 세팅
                               ),
                       itemBuilder: (context, index) {
-                        final photo = viewModel
-                            .photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
+                        final photo = state.photos[index]; // photo 인덱스 번호 쨰 아이템으로 가져온다.
                         return PhotoWidget(
                           photo: photo, // const 위에 있어서 변수를 사용해야되서  오류가 난다.
                         ); //Photowidget 으로 변경 해주고 호출
